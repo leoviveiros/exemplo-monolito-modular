@@ -1,0 +1,15 @@
+## Typescript ##
+
+# inicia projeto ts
+npx tsc --init
+
+# compila ts
+npx tsc
+
+## TS Lint ##
+
+# inicia tslint
+npx tslint --init
+
+## Jest ##
+npx jest --init
