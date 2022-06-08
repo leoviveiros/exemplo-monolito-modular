@@ -47,4 +47,23 @@ describe('ProductAdmFacade Test', () => {
         expect(product.stock).toBe(input.stock);
     });
 
+    it('should check stock of a product', async () => {
+        const productFacade = ProductAdmFacadeFactory.create();
+
+        const input = {
+            id: '1',
+            name: 'Product 1',
+            description: 'Product 1 description',
+            purchasePrice: 100,
+            stock: 10
+        }
+
+        await productFacade.addProduct(input);
+
+        const output = await productFacade.checkStock({ productId: input.id });
+
+        expect(output.productId).toBe(input.id);
+        expect(output.stock).toBe(input.stock);
+    });
+
 });
