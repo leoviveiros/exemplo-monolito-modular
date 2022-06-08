@@ -1,8 +1,6 @@
 import { Sequelize } from 'sequelize-typescript';
+import ProductAdmFacadeFactory from '../factory/product-adm.factory';
 import ProductModel from '../repository/product.model';
-import ProductRepository from '../repository/product.repository';
-import AddProductUseCase from '../usecase/add-product/add-product.usecase';
-import ProductAdmFacade from './product-adm.facade';
 
 describe('ProductAdmFacade Test', () => {
     let sequelize: Sequelize;
@@ -27,12 +25,7 @@ describe('ProductAdmFacade Test', () => {
     });
 
     it('should create a product', async () => {
-        const productRepository = new ProductRepository();
-        const addProductUsecase = new AddProductUseCase(productRepository);
-        const productFacade = new ProductAdmFacade({
-            addUseCase: addProductUsecase,
-            checkStockUseCase: undefined
-        });
+        const productFacade = ProductAdmFacadeFactory.create();
 
         const input = {
             id: '1',
@@ -52,5 +45,6 @@ describe('ProductAdmFacade Test', () => {
         expect(product.description).toBe(input.description);
         expect(product.purchasePrice).toBe(input.purchasePrice);
         expect(product.stock).toBe(input.stock);
-    })
+    });
+
 });
