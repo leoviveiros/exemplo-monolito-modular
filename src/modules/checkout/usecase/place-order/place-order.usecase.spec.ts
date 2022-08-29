@@ -12,6 +12,7 @@ describe('PlaceOrderUseCase unit test', () => {
         it('shoul throw an error when client not found', async () => {
             mockClientFacade.find.mockResolvedValue(null);
 
+            // @ts-expect-error
             const placeOrderUseCase = new PlaceOrderUseCase({
                 clientFacade: mockClientFacade
             });
@@ -29,6 +30,7 @@ describe('PlaceOrderUseCase unit test', () => {
         it('should throw an error when products are not valid', async () => {
             mockClientFacade.find.mockResolvedValue(true);
 
+            // @ts-expect-error
             const placeOrderUseCase = new PlaceOrderUseCase({
                 clientFacade: mockClientFacade
             });
@@ -50,4 +52,53 @@ describe('PlaceOrderUseCase unit test', () => {
         });
     });
 
+    describe('validateProducts method', () => {
+        it('should throw when no products are selected', async () => {
+            // @ts-expect-error
+            const placeOrderUseCase = new PlaceOrderUseCase({});
+
+            const inputDto: PlaceOrderInputDto = {
+                clientId: '0',
+                products: []
+            };
+
+            await expect(placeOrderUseCase['validateProducts'](inputDto))
+                .rejects.toThrow(new Error('No products selected'));
+        });
+
+        it('should throw when a product is out of stock', async () => {
+            const mockProductFacade = {
+                checkStock: jest.fn((input: {productId: string}) => {
+                    return Promise.resolve({
+                        productId: input.productId,
+                        stock: input.productId === '0' ? 0 : 1,
+                    })
+                })
+            };
+            
+            const placeOrderUseCase = new PlaceOrderUseCase({
+                // @ts-expect-error
+                productFacade: mockProductFacade
+            });
+
+            let input: PlaceOrderInputDto = {
+                clientId: '0',
+                products: [{ productId: '0' }]
+            }
+
+            await expect(placeOrderUseCase['validateProducts'](input))
+                .rejects.toThrow(new Error('Product 0 is not available in stock'));
+            
+            input = {
+                clientId: '0',
+                products: [{ productId: '1' }, { productId: '0' }]
+            }
+
+            await expect(placeOrderUseCase['validateProducts'](input))
+                .rejects.toThrow(new Error('Product 0 is not available in stock'));
+            
+            expect(mockProductFacade.checkStock).toHaveBeenCalledTimes(3);
+        });
+        
+    });
 });
