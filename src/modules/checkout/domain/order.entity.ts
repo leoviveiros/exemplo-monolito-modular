@@ -7,7 +7,7 @@ type OrderProps = {
     id?: Id;
     client: Client;
     products: Product[];
-    status: string;
+    status?: string;
 }
 
 export default class Order extends BaseEntity {

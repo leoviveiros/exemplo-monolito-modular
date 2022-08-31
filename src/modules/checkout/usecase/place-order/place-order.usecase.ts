@@ -5,6 +5,8 @@ import Id from '../../../shared/domain/value-object/id.value-object';
 import Product from '../../domain/product.entity';
 import StoreCatalogFacadeInterface from '../../../store-catalog/facade/store-catalog.facade.interface';
 import { PlaceOrderInputDto, PlaceOrderOutputDto } from './place-order.dto';
+import Client from '../../domain/client.entity';
+import Order from '../../domain/order.entity';
 
 type PlaceOrderUseCaseProps = {
     catalogFacade: StoreCatalogFacadeInterface,
@@ -26,16 +28,27 @@ export default class PlaceOrderUseCase implements UseCaseInterface<PlaceOrderInp
 
     async execute(input: PlaceOrderInputDto): Promise<PlaceOrderOutputDto> {
         // buscar cliente
-        const client = await this._clientFacade.find({ id: input.clientId });
+        const clientDto = await this._clientFacade.find({ id: input.clientId });
 
-        if (!client) {
+        if (!clientDto) {
             throw new Error('Client not found');
         }
 
         await this.validateProducts(input);
 
-        // validar produtos
-        // recuperar produtos
+        const products = await Promise.all(input.products.map(item => this.getProduct(item.productId)));
+
+        const client = new Client({
+            id: new Id(clientDto.id),
+            name: clientDto.name,
+            address: clientDto.address,
+            email: clientDto.email
+        })
+
+        const order = new Order({
+            client: client,
+            products: products, 
+        })
         
         // criar order
         // processar pagamento
