@@ -118,17 +118,7 @@ describe('PlaceOrderUseCase unit test', () => {
 
             beforeEach(() => {
                 mockClientFacade.find
-                    .mockClear()
                     .mockResolvedValue(clientProps);
-                
-                mockCheckoutRepo.addOrder
-                    .mockClear();
-                
-                mockPaymentFacade.process
-                    .mockClear();
-
-                mockValidateProducts.mockClear();
-                mockGetProduct.mockClear();
             });
 
             afterAll(() => {
