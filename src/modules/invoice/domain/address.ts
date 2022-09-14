@@ -4,7 +4,7 @@ export interface AddressProps {
     complement?: string;
     city: string;
     state: string;
-    zip: string;
+    zipCode: string;
 }
 
 export default class Address {
@@ -13,7 +13,7 @@ export default class Address {
     _complement?: string;
     _city: string;
     _state: string;
-    _zip: string;
+    _zipCode: string;
 
     constructor(props: AddressProps) {
         this._street = props.street;
@@ -21,7 +21,7 @@ export default class Address {
         this._complement = props.complement;
         this._city = props.city;
         this._state = props.state;
-        this._zip = props.zip;
+        this._zipCode = props.zipCode;
 
         this.validate();
     }
@@ -46,8 +46,8 @@ export default class Address {
         return this._state;
     }
 
-    get zip(): string {
-        return this._zip;
+    get zipCode(): string {
+        return this._zipCode;
     }
 
     validate() {
@@ -63,7 +63,7 @@ export default class Address {
         if (!this._state || this._state.length === 0) {
             throw new Error("State is required");
         }
-        if (!this._zip || this._zip.length === 0) {
+        if (!this._zipCode || this._zipCode.length === 0) {
             throw new Error("Zip is required");
         }
     }
