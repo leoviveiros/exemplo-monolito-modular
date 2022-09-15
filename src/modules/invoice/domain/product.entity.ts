@@ -35,4 +35,5 @@ export default class Product extends BaseEntity {
             throw new Error('Price is required');
         }
     }
+
 }
