@@ -1,8 +1,8 @@
-import { Column, HasMany, Model, PrimaryKey, Table } from 'sequelize-typescript';
+import { BelongsToMany, Column, Model, PrimaryKey, Table } from 'sequelize-typescript';
 import InvoiceProductModel from './invoice-product.model';
 import ProductModel from './product.model';
 
-type InvoiceProduct = InvoiceProductModel & { product: ProductModel };
+type InvoiceProduct = ProductModel & { InvoiceProductModel: InvoiceProductModel };
 
 @Table({
     tableName: 'invoices',
@@ -43,7 +43,7 @@ export default class InvoiceModel extends Model {
     @Column({ allowNull: false })
     declare updatedAt: Date;
 
-    @HasMany(() => InvoiceProductModel, 'invoiceId')
+    @BelongsToMany(() => ProductModel, () => InvoiceProductModel)
     declare items: InvoiceProduct[];
 
 }

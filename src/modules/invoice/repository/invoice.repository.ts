@@ -1,13 +1,12 @@
 import Invoice from '../domain/invoice.entity';
 import InvoiceGateway from '../gateway/invoice.gateway';
-import InvoiceProductModel from './invoice-product.model';
 import InvoiceModel from './invoice.model';
 import ProductModel from './product.model';
 
 export default class InvoiceRepository implements InvoiceGateway {
 
     public async find(id: string): Promise<Invoice> {
-        const invoice = await InvoiceModel.findOne({ where: { id }, include: [InvoiceProductModel, ProductModel] });
+        const invoice = await InvoiceModel.findOne({ where: { id }, include: [ProductModel] });
 
         if (!invoice) {
             throw new Error('Invoice not found');
@@ -26,9 +25,9 @@ export default class InvoiceRepository implements InvoiceGateway {
                 zipCode: invoice.zipCode
             },
             items: invoice.items.map(item => ({
-                id: item.productId,
-                name: item.product.name,
-                price: item.price
+                id: item.id,
+                name: item.name,
+                price: item.InvoiceProductModel.price
             })),
         });
     }
