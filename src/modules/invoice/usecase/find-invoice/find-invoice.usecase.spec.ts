@@ -22,7 +22,7 @@ describe('find invoice usecase test', () => {
         const MockRepository = () => {
             return {
                 find: jest.fn().mockResolvedValue(invoice),
-                create: jest.fn()
+                generate: jest.fn()
             };
         }
 

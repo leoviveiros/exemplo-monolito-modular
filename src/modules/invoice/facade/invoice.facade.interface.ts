@@ -1,6 +1,6 @@
-import { CreateInvoiceInputDto, CreateInvoiceOutputDto, FindInvoiceInputDto, FindInvoiceOutputDTO } from './invoice.facade.dto';
+import { GenerateInvoiceInputDto, GenerateInvoiceOutputDto, FindInvoiceInputDto, FindInvoiceOutputDTO } from './invoice.facade.dto';
 
 export default interface InvoiceFacadeInterface {
-    create(input: CreateInvoiceInputDto): Promise<CreateInvoiceOutputDto>;
+    generate(input: GenerateInvoiceInputDto): Promise<GenerateInvoiceOutputDto>;
     find(input: FindInvoiceInputDto): Promise<FindInvoiceOutputDTO>;
 }

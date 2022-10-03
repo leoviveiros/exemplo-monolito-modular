@@ -70,7 +70,7 @@ export default class PlaceOrderUseCase implements UseCaseInterface<PlaceOrderInp
         let invoice = null;
 
         if (payment.status === 'approved') {
-            invoice = await this._invoiceFacade.create({
+            invoice = await this._invoiceFacade.generate({
                 name: client.name,
                 address: client.address,
                 items: products.map(prod => ({

@@ -113,7 +113,7 @@ describe('invoice repository test', () => {
             ]
         })
 
-        await invoiceRepository.create(invoice);
+        await invoiceRepository.generate(invoice);
 
         const createdInvoice = await invoiceRepository.find(invoice.id.id);
 

@@ -26,24 +26,24 @@ export default class GenerateInvoiceUseCase {
             })),
         });
 
-        const invoiceResult = await this.invoiceRepository.create(invoice);
+        await this.invoiceRepository.generate(invoice);
 
         return {
-            id: invoiceResult.id.id,
-            name: invoiceResult.name,
-            document: invoiceResult.document,
-            street: invoiceResult.address.street,
-            number: invoiceResult.address.number,
-            complement: invoiceResult.address.complement,
-            city: invoiceResult.address.city,
-            state: invoiceResult.address.state,
-            zipCode: invoiceResult.address.zipCode,
-            items: invoiceResult.items.map((item) => ({
+            id: invoice.id.id,
+            name: invoice.name,
+            document: invoice.document,
+            street: invoice.address.street,
+            number: invoice.address.number,
+            complement: invoice.address.complement,
+            city: invoice.address.city,
+            state: invoice.address.state,
+            zipCode: invoice.address.zipCode,
+            items: invoice.items.map((item) => ({
                 id: item.id.id,
                 name: item.name,
                 price: item.price,
             })),
-            total: invoiceResult.total,            
+            total: invoice.total,            
         };
     }
 

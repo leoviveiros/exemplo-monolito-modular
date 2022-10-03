@@ -1,6 +1,12 @@
-export interface CreateInvoiceInputDto {
+export interface GenerateInvoiceInputDto {
     name: string;
-    address: string;
+    document: string;
+    street: string;
+    number: number;
+    complement: string;
+    city: string;
+    state: string;
+    zipCode: string;
     items: {
         id: string;
         name: string;
@@ -8,8 +14,22 @@ export interface CreateInvoiceInputDto {
     }[];
 }
 
-export interface CreateInvoiceOutputDto {
+export interface GenerateInvoiceOutputDto {
     id: string;
+    name: string;
+    document: string;
+    street: string;
+    number: number;
+    complement: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    items: {
+        id: string;
+        name: string;
+        price: number;
+    }[];
+    total: number;
 }
 
 export interface FindInvoiceInputDto {

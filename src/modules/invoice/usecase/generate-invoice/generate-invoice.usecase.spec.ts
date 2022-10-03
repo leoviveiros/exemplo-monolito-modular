@@ -24,7 +24,7 @@ describe('generate invoice usecase test', () => {
 
         const MockRepository = () => {
             return {
-                create: jest.fn().mockResolvedValue(invoice),
+                generate: jest.fn().mockResolvedValue(invoice),
                 find: jest.fn()
             };
         }
@@ -50,8 +50,8 @@ describe('generate invoice usecase test', () => {
 
         const output = await usecase.execute(input);
 
-        expect(invoiceRepository.create).toHaveBeenCalled();
-        expect(output.id).toBe('1');
+        expect(invoiceRepository.generate).toHaveBeenCalled();
+        expect(output.id).toBeDefined();
         expect(output.name).toBe('Client 1');
         expect(output.document).toBe('123456789');
         expect(output.street).toBe('Street 1');

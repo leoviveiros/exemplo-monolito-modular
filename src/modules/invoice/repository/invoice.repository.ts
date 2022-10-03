@@ -33,7 +33,7 @@ export default class InvoiceRepository implements InvoiceGateway {
         });
     }
 
-    public async create(invoice: Invoice): Promise<void> {
+    public async generate(invoice: Invoice): Promise<void> {
         await InvoiceModel.create({
             id: invoice.id.id,
             name: invoice.name,
