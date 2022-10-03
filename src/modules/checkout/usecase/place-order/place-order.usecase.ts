@@ -53,7 +53,13 @@ export default class PlaceOrderUseCase implements UseCaseInterface<PlaceOrderInp
         const client = new Client({
             id: new Id(clientDto.id),
             name: clientDto.name,
-            address: clientDto.address,
+            document: clientDto.document,
+            street: clientDto.street,
+            number: clientDto.number,
+            complement: clientDto.complement,
+            city: clientDto.city,
+            state: clientDto.state,
+            zipCode: clientDto.zipCode,
             email: clientDto.email
         })
 
@@ -72,7 +78,13 @@ export default class PlaceOrderUseCase implements UseCaseInterface<PlaceOrderInp
         if (payment.status === 'approved') {
             invoice = await this._invoiceFacade.generate({
                 name: client.name,
-                address: client.address,
+                document: client.document,
+                street: client.street,
+                number: client.number,
+                complement: client.complement,
+                city: client.city,
+                state: client.state,
+                zipCode: client.zipCode,
                 items: products.map(prod => ({
                     id: prod.id.id,
                     name: prod.name,

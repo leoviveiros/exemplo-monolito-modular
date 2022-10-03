@@ -8,7 +8,13 @@ describe('find client usecase test', () => {
         id: new Id('1'),
         name: 'Client 1',
         email: 'x@x.com',
-        address: 'Address 1'
+        document: '123456789',
+        street: 'Street 1',
+        number: 1,
+        complement: 'Complement 1',
+        city: 'City 1',
+        state: 'State 1',
+        zipCode: '12345678'
     })
 
     const MockRepository = () => {
@@ -32,7 +38,7 @@ describe('find client usecase test', () => {
         expect(output.id).toBe('1');
         expect(output.name).toBe('Client 1');
         expect(output.email).toBe('x@x.com');
-        expect(output.address).toBe('Address 1');
+        expect(output.document).toBe('123456789');
         expect(output.createdAt).toBeDefined();
         expect(output.updatedAt).toBeDefined();
     });

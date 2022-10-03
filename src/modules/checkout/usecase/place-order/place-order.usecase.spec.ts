@@ -60,7 +60,7 @@ describe('PlaceOrderUseCase unit test', () => {
                 id: '1c',
                 name: 'Cliente 1',                
                 email: 'cliente@email.com',
-                address: 'Street 01'
+                document: '123456789',
             }
 
             const mockPaymentFacade = {
@@ -73,7 +73,8 @@ describe('PlaceOrderUseCase unit test', () => {
             }
 
             const mockInvoiceFacade = {
-                create: jest.fn().mockResolvedValue({ id: '1i' })
+                generate: jest.fn().mockResolvedValue({ id: '1i' }),
+                find: jest.fn()
             }
 
             // @ts-expect-error
@@ -162,7 +163,7 @@ describe('PlaceOrderUseCase unit test', () => {
                     amount: output.total
                 });
 
-                expect(mockInvoiceFacade.create).not.toHaveBeenCalled();
+                expect(mockInvoiceFacade.generate).not.toHaveBeenCalled();
             });
 
             it('should be approved', async () => {
@@ -202,10 +203,10 @@ describe('PlaceOrderUseCase unit test', () => {
                     amount: output.total
                 });
 
-                expect(mockInvoiceFacade.create).toHaveBeenCalledTimes(1);
-                expect(mockInvoiceFacade.create).toHaveBeenCalledWith({
+                expect(mockInvoiceFacade.generate).toHaveBeenCalledTimes(1);
+                expect(mockInvoiceFacade.generate).toHaveBeenCalledWith({
                     name: clientProps.name,
-                    address: clientProps.address,
+                    document: clientProps.document,
                     items: Object.values(products).map(prod => ({
                         id: prod.id.id,
                         name: prod.name,

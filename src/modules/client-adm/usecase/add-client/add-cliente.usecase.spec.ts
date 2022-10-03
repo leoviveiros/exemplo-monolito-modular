@@ -16,7 +16,13 @@ describe('Add Client UseCase Test', () => {
         const input = {
             name: 'Cliente Teste',
             email: 'cliente@teste.com',
-            address: 'Address 1'
+            document: '123456789',
+            street: 'Street 1',
+            number: 1,
+            complement: 'Complement 1',
+            city: 'City 1',
+            state: 'State 1',
+            zipCode: '12345678'
         };
 
 
@@ -26,7 +32,7 @@ describe('Add Client UseCase Test', () => {
         expect(output.id).toBeDefined();
         expect(output.name).toBe(input.name);
         expect(output.email).toBe(input.email);
-        expect(output.address).toBe(input.address);
+        expect(output.document).toBe(input.document);
     });
 
 });
