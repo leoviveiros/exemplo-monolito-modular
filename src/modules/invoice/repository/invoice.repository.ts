@@ -1,5 +1,6 @@
 import Invoice from '../domain/invoice.entity';
 import InvoiceGateway from '../gateway/invoice.gateway';
+import InvoiceProductModel from './invoice-product.model';
 import InvoiceModel from './invoice.model';
 import ProductModel from './product.model';
 
@@ -32,4 +33,27 @@ export default class InvoiceRepository implements InvoiceGateway {
         });
     }
 
+    public async create(invoice: Invoice): Promise<void> {
+        await InvoiceModel.create({
+            id: invoice.id.id,
+            name: invoice.name,
+            document: invoice.document,
+            street: invoice.address.street,
+            number: invoice.address.number,
+            complement: invoice.address.complement,
+            city: invoice.address.city,
+            state: invoice.address.state,
+            zipCode: invoice.address.zipCode,
+            createdAt: new Date(),
+            updatedAt: new Date(),            
+        });        
+
+        invoice.items.forEach(async item => {
+            await InvoiceProductModel.create({
+                invoiceId: invoice.id.id,
+                productId: item.id.id,
+                price: item.price
+            });
+        });
+    }
 }
